@@ -86,7 +86,7 @@ export default function AddNotesModal() {
             />
           </div>
 
-          <button className="w-full">Add</button>
+          <button className="w-full" onClick={() => setShowAddNoteModal(!showAddNoteModal)}>Add</button>
         </div>
       </form>
     </div>

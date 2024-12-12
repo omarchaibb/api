@@ -10,19 +10,23 @@ import { instance } from "./axios";
 
 function App() {
   const [isConnected, setIsConnected] = useState(false);
-  const token = localStorage.getItem("token");
-
-  useEffect(() => {
-    token ? setIsConnected(true) : setIsConnected(false);
-  }, [token]);
-  const { notesLoding, notes, setNotes } = useGetNotes();
   const [showAddNoteModal, setShowAddNoteModal] = useState(false);
-  const [showShareModal, setShareModal] = useState(false);
+  const [showShareModal, setShareModal] = useState({
+    id: null,
+    isShow: false,
+  });
   const [users, setUsers] = useState([]);
   const [showUpdateModal, setShowUpdateModal] = useState({
     id: null,
     isShow: false,
   });
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    token ? setIsConnected(true) : setIsConnected(false);
+  }, [token]);
+
+  const { notesLoding, notes, setNotes } = useGetNotes();
 
   useEffect(() => {
     async function GetUsers() {
@@ -57,6 +61,7 @@ function App() {
               showAddNoteModal,
               showShareModal,
               setShareModal,
+              
               users,
             }}
           >
@@ -65,8 +70,8 @@ function App() {
             {showUpdateModal.isShow && (
               <UpdateFormModal showUpdateModal={showUpdateModal} />
             )}
-            {showShareModal && <ShareWithModal />}
-          </NotesContext.Provider>
+            {showShareModal.isShow && <ShareWithModal showShareModal={showShareModal} />}
+          </NotesContext.Provider>{" "}
         </>
       ) : (
         <Login setIsConnected={setIsConnected} />

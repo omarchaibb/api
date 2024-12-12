@@ -8,7 +8,7 @@ export default function NotesList({
   handleRemoveNote,
   showOption,
 }) {
-  const { setShowUpdateModal , setShareModal } = useContext(NotesContext);
+  const { setShowUpdateModal, setShareModal } = useContext(NotesContext);
 
   return (
     <tr className="bg-white border-b dark:bg-[#353535] dark:border-gray-700 hover:bg-[#5b5b5b]">
@@ -22,12 +22,15 @@ export default function NotesList({
         {el.is_owner ? "true" : "false"}
       </td>
       <td className="px-6 py-4 font-medium whitespace-nowrap dark:text-white">
-        {el.shared_with.length > 0
-          ? el.shared_with.map((e) => e.first_name)
+        {el.shared_with?.length > 0
+          ? el.shared_with.map((e, index) => (
+              <div key={index}>{e.first_name}</div>
+            ))
           : "no one"}
       </td>
 
-      <td className="px-6 py-4 font-medium whitespace-nowrap dark:text-white">
+      {/* options td  */}
+      <td className="px-6 py-4 font-medium whitespace-nowrap dark:text-white ">
         <div
           onClick={() => {
             setShowOption({
@@ -40,7 +43,7 @@ export default function NotesList({
         >
           {
             <div
-              className={`options flex flex-col gap-2 absolute z-10 right-[-97px] bottom-[-160px] bg-[#464646] p-[10px] rounded-[10px] transition-all duration-300 ${
+              className={`options  flex flex-col gap-2 absolute z-40 right-[-97px] bottom-[-160px] bg-[#464646] p-[10px] rounded-[10px] transition-all duration-300 ${
                 showOption.id == el.id && showOption.isActive
                   ? "transition-y-[0px] scale-1 opacity-1"
                   : "translate-y-[-10px] scale-0 opacity-0"
@@ -103,7 +106,16 @@ export default function NotesList({
               </button>
               {/* share button  */}
 
-              <button className="flex gap-[10px] items-center justify-between w-[102px] " onClick={()=> setShareModal(true)}>
+              <button
+                className="flex gap-[10px] items-center justify-between w-[102px] "
+                onClick={() => {
+                  setShareModal((prev) => ({
+                    ...prev,
+                    id: el.id,
+                    isShow: !prev.isShow,
+                  }));
+                }}
+              >
                 <div>
                   <svg
                     width="24"
