@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { instance } from "../axios";
-import Select from "react-select";
 import NotesContext from "../context/NotesContext";
 export default function AddNotesModal() {
   const [formFields, setFormFeilds] = useState({
@@ -34,10 +33,7 @@ export default function AddNotesModal() {
         className="fixed inset-0 bg-black opacity-[0.5] z-10"
         onClick={() => setShowAddNoteModal(false)}
       ></div>
-      <form
-        onSubmit={(e) => AddNote(e)}
-        className="absolute z-20 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]"
-      >
+      <form className="absolute z-20 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
         <div className="mb-6 bg-[#353535] p-6 rounded-md">
           <div>
             <label
@@ -86,7 +82,15 @@ export default function AddNotesModal() {
             />
           </div>
 
-          <button className="w-full" onClick={() => setShowAddNoteModal(!showAddNoteModal)}>Add</button>
+          <button
+            className="w-full"
+            onClick={(e) => {
+              AddNote(e);
+              setShowAddNoteModal(!showAddNoteModal);
+            }}
+          >
+            Add
+          </button>
         </div>
       </form>
     </div>

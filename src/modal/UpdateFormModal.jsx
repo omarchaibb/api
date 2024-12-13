@@ -28,6 +28,7 @@ export default function UpdateFormModal({ showUpdateModal }) {
   }, [id]);
 
   const updateNote = async (e) => {
+    console.log(formFields);
     e.preventDefault();
     const token = localStorage.getItem("token");
     try {

@@ -22,7 +22,7 @@ export default function Loader({ children, loading, type = null }) {
       case "fulfield":
         return <>{children}</>;
       case "rejected":
-        return <div>Erreur</div>;
+        return <div>there is an error</div>;
     }
   }
 }
